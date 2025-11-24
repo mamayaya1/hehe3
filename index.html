@@ -164,18 +164,20 @@
     </div>
 
     <script>
-      function openGame() {
-        var win = window.open();
-        if (win) {
-          var iframe = document.createElement("iframe");
-          iframe.style.width = "100%";
-          iframe.style.height = "100%";
-          iframe.style.border = "none";
-          iframe.src =
-            "https://mamayaya1.github.io/hehe3/";
-          win.document.body.appendChild(iframe);
-        }
-      }
+     javascript:(function(){
+  var url="https://mamayaya1.github.io/hehe2/#";
+  var win=window.open("about:blank","_blank");
+  if(win){
+    var iframe=win.document.createElement("iframe");
+    iframe.src=url;
+    iframe.id="javascriptclose";
+    iframe.style.cssText="position:fixed;top:0;left:0;width:100%;height:100%;border:none;z-index:999999;background:#fff;";
+    win.document.body.style.margin="0";
+    win.document.body.style.padding="0";
+    win.document.body.appendChild(iframe);
+  }
+})();
+
     </script>
   </body>
 </html>
