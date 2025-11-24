@@ -46,14 +46,23 @@
       function openGame() {
         var win = window.open("about:blank");
         if (win) {
-          var iframe = win.document.createElement("iframe");
-          iframe.src = "https://browser.lol/";
-          iframe.style.width = "100%";
-          iframe.style.height = "100%";
-          iframe.style.border = "none";
-          win.document.body.style.margin = "0";
-          win.document.body.style.padding = "0";
-          win.document.body.appendChild(iframe);
+          win.document.open();
+          win.document.write(`
+            <!DOCTYPE html>
+            <html>
+              <head><title>Game</title></head>
+              <body style="margin:0;padding:0;overflow:hidden;">
+                <iframe src="https://browser.lol/" id="gameFrame"></iframe>
+                <script>
+                  var iframe = document.getElementById("gameFrame");
+                  iframe.style.width = "100%";
+                  iframe.style.height = "100%";
+                  iframe.style.border = "none";
+                <\/script>
+              </body>
+            </html>
+          `);
+          win.document.close();
         }
       }
     </script>
