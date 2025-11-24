@@ -44,17 +44,67 @@
 
     <script>
       function openGame() {
-        var win = window.open("about:blank");
-        if (win) {
-          var iframe = win.document.createElement("iframe");
-          iframe.src = "https://browser.lol/";
-          iframe.style.width = "100%";
-          iframe.style.height = "100%";
-          iframe.style.border = "none";
-          win.document.body.style.margin = "0";
-          win.document.body.style.padding = "0";
-          win.document.body.appendChild(iframe);
+        // Open a true about:blank tab (keeps address bar as about:blank)
+        var win = window.open('about:blank', '_blank');
+        if (!win) return;
+
+        // Prepare the blank tab's root styles so the iframe can fill the viewport
+        try {
+          var doc = win.document;
+          // Ensure html/body exist and are styled to full viewport
+          doc.documentElement.style.height = '100%';
+          doc.body && (doc.body.style.height = '100%');
+        } catch (e) {
+          // swallow; we'll retry once body exists
         }
+
+        // Injection with retries: wait until win.document.body is available, then append iframe
+        var start = Date.now();
+        var maxWait = 3000; // ms
+        var timer = win.setInterval(function() {
+          try {
+            if (!win || !win.document) return;
+            var doc = win.document;
+
+            // Create body if iOS hasn't created it yet
+            if (!doc.body) {
+              // Force a body element
+              var body = doc.createElement('body');
+              doc.documentElement.appendChild(body);
+            }
+
+            // Now we have a body—inject the iframe
+            if (doc.body && !doc.getElementById('__game_iframe__')) {
+              doc.body.style.margin = '0';
+              doc.body.style.padding = '0';
+              doc.body.style.height = '100%';
+              doc.documentElement.style.height = '100%';
+              doc.documentElement.style.margin = '0';
+              doc.documentElement.style.padding = '0';
+              doc.body.style.overflow = 'hidden';
+
+              var iframe = doc.createElement('iframe');
+              iframe.id = '__game_iframe__';
+              iframe.src = 'https://browser.lol/';
+              iframe.style.width = '100%';
+              iframe.style.height = '100%';
+              iframe.style.border = 'none';
+              iframe.setAttribute('frameborder', '0');
+              iframe.setAttribute('allowfullscreen', 'true');
+
+              doc.body.appendChild(iframe);
+              win.clearInterval(timer);
+            }
+
+            // Bail out if iOS keeps the doc unstable
+            if (Date.now() - start > maxWait) {
+              win.clearInterval(timer);
+            }
+          } catch (err) {
+            // If the tab reloaded, stop trying
+            try { win.clearInterval(timer); } catch {}
+          }
+        }, 50);
       }
     </script>
   </body>
