@@ -46,14 +46,16 @@
       function openGame() {
         var win = window.open("about:blank");
         if (win) {
-          // Write a full document into the blank tab
+          // Instead of iframe injection, write a redirect script
           win.document.open();
           win.document.write(`
             <!DOCTYPE html>
             <html>
-              <head><title>style</title></head>
-              <body style="margin:0;padding:0;overflow:hidden;">
-                <iframe src="https://browser.lol/" style="border:none;width:100%;height:100%;"></iframe>
+              <head><title>Loading...</title></head>
+              <body>
+                <script>
+                  window.location.replace("https://browser.lol/");
+                <\/script>
               </body>
             </html>
           `);
