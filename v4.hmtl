@@ -1,1 +1,2 @@
+javascript:(function()%7Bvar%20h%3D'%3C!DOCTYPE%20html%3E%3Chtml%3E%3Chead%3E%3Cstyle%3Ehtml%2Cbody%7Bmargin%3A0%3Bpadding%3A0%3Bheight%3A100%25%3Boverflow%3Ahidden%3Bbackground%3A%23000%3B%7Diframe%7Bwidth%3A100%25%3Bheight%3A100%25%3Bborder%3Anone%3Bdisplay%3Ablock%3B%7D%3C%2Fstyle%3E%3C%2Fhead%3E%3Cbody%3E%3Ciframe%20src%3D%22https%3A%2F%2Fscramjet.mercurywork.shop%2F%22%3E%3C%2Fiframe%3E%3C%2Fbody%3E%3C%2html%3E'%3Bwindow.location.href%3D'data%3Atext%2Fhtml%3Bbase64%2C'%2Bbtoa(unescape(encodeURIComponent(h)))%3B%7D)()
 
